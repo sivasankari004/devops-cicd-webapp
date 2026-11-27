@@ -1,6 +1,7 @@
+
 pipeline {
     agent any
-    
+
     options {
         timestamps()
         disableConcurrentBuilds()
@@ -12,6 +13,9 @@ pipeline {
         K8S_NAMESPACE = 'devops-demo'
         K8S_DEPLOYMENT = 'webapp'
         K8S_CONTAINER = 'nginx'
+
+        // Kubernetes configuration for Jenkins
+        KUBECONFIG = '/var/lib/jenkins/.kube/config'
     }
 
     stages {
@@ -78,6 +82,9 @@ pipeline {
             steps {
                 sh '''
                     set -eu
+
+                    echo "Checking Kubernetes connection..."
+                    kubectl get nodes
 
                     kubectl apply -f deployment.yaml
                     kubectl apply -f service.yaml
