@@ -1,5 +1,9 @@
 pipeline {
     agent any
+    environment {
+        KUBECONFIG = '/var/lib/jenkins/.kube/config'
+    }
+
 
     options {
         timestamps()
